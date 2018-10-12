@@ -8,16 +8,21 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+//  Dữ liệu
+let mang = ["AC Unity", "AC Syndicate", "AC Obdyssey", "God of War 4", "Spider-man SP4", "Red Dead Redemption 2"]
+
+class ViewController: UIViewController
+{
 
     //  Ánh xạ
+    @IBOutlet weak var tableV: UITableView!
     
-    
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        tableV.dataSource = self
+        tableV.delegate = self
     }
     
     
@@ -30,15 +35,15 @@ class ViewController: UIViewController {
     @IBAction func btn_Filter(_ sender: Any)
     {
         //  1.  Tạo bảng lựa chọn
-        let sheet = UIAlertController(title: "Lựa chọn lọc", message: nil, preferredStyle: .actionSheet)
+        let sheet = UIAlertController(title: "Chọn dòng game", message: nil, preferredStyle: .actionSheet)
         
         //  2.  Thêm lựa chọn
-        sheet.addAction(UIAlertAction(title: "Lựa chọn 1", style: .default, handler: { (action) in
+        sheet.addAction(UIAlertAction(title: "Assassin's Creed", style: .default, handler: { (action) in
             //
         }))
         
         
-        sheet.addAction(UIAlertAction(title: "Lựa chọn 2", style: .default, handler: { (action) in
+        sheet.addAction(UIAlertAction(title: "Game PS4", style: .default, handler: { (action) in
             //
         }))
         
@@ -53,3 +58,19 @@ class ViewController: UIViewController {
     }
 }
 
+
+
+extension UIViewController: UITableViewDataSource, UITableViewDelegate
+{
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return mang.count
+    }
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
+        
+        cell?.textLabel?.text = mang[indexPath.row]
+        
+        return cell!
+    }
+}
